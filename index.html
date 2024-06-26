@@ -16,7 +16,7 @@
         body {
             background-color: #DBFFDB;
         }
-        span {
+        span #span1,#span2{
             color: #93e780;
             font-style: italic;
             font-weight: bold;
@@ -24,6 +24,50 @@
         .loading-wrapper {
             display: none; /* Start hidden */
         }
+      
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
     </style>
 </head>
 <body onload="myloader()">
@@ -38,10 +82,19 @@
             <header>
                 <img src="../solify/images/officiallogo.png" id="officiallogo" width="65px" height="65px" align="left" href="#main">
                 <ul>
-                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="http://localhost:4000">Login/Sign Up</a></li>
+                    <!--<li style="color: #dbffdb;">You are logged in as: <span id="loggedInUserName"></span></li>
+                    <li style="color: #dbffdb;">Email: <span id="loggedInUserEmail"></span>-->
+                <li><div class="dropdown">
+                  <button class="dropbtn">User Account</button>
+                  <div class="dropdown-content">
+                      <a href="badges.html">Badges</a>
+                      <a href="#">Settings</a>
+                      <a href="#" id="logoutButton">Logout</a>
+                  </div>
+              </div></li>
                 </ul>
             </header>
             <section class="sec1" id="main">
@@ -62,7 +115,7 @@
                             <img src="../solify/images/selflove.png" alt="">
                         </div>
                         <div class="textbox">
-                            <p>Introducing a cutting-edge web-based platform, our mission is to empower individuals in <span> cultivating inner peace</span> and managing stress effectively</p>
+                            <p>Introducing a cutting-edge web-based platform, our mission is to empower individuals in <span id="span1"> cultivating inner peace</span> and managing stress effectively</p>
                         </div>
                     </div>
                 </div>
@@ -73,7 +126,7 @@
                         <div class="content1">
                             <div class="info" id="info">
                                 <p>With thoughtful gratitude prompts and tailored resources, our platform is designed to support individuals in their journey towards emotional balance and resilience.<br>
-                                    <span>Transform Stress into Serenity: Your Personal Oasis Awaits.</span></p>
+                                    <span id="span2">Transform Stress into Serenity: Your Personal Oasis Awaits.</span></p>
                             </div>
                             <div class="image" id="image2">
                                 <img src="../solify/images/mentalhealth.png" alt="">
@@ -306,6 +359,10 @@
   });
 </script>-->
 <script>
+  logoutButton.addEventListener('click', function() {
+                localStorage.removeItem('loggedInUser'); // Remove logged-in user key
+                window.location.href = 'login.html'; // Redirect to login page after logout
+            });
     document.querySelector('.top-button').addEventListener('click', function(event) {
       event.preventDefault(); // Prevent default anchor behavior
       const targetElement = document.querySelector(this.getAttribute('href'));

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to Our Website!</h1>
+    <div id="userInfo">
+        <p>You are logged in as: <span id="loggedInUserName"></span></p>
+        <p>Email: <span id="loggedInUserEmail"></span></p>
+    </div>
+    <button id="logoutButton">Logout</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInUserEmail = localStorage.getItem('loggedInUser');
+            const userData = JSON.parse(localStorage.getItem(loggedInUserEmail)); // Retrieve user data
+
+            const loggedInUserElement = document.getElementById('loggedInUserName');
+            const loggedInUserEmailElement = document.getElementById('loggedInUserEmail');
+            const logoutButton = document.getElementById('logoutButton');
+
+            if (userData) {
+                loggedInUserElement.textContent = userData.name; // Display logged-in user's name
+                loggedInUserEmailElement.textContent = loggedInUserEmail; // Display logged-in user's email
+            } else {
+                // If no user data is found, redirect to login page
+                window.location.href = 'login.html'; // Adjust this to your login/signup page
+            }
+
+            logoutButton.addEventListener('click', function() {
+                localStorage.removeItem('loggedInUser'); // Remove logged-in user key
+                window.location.href = 'login.html'; // Redirect to login page after logout
+            });
+        });
+    </script>
+</body>
+</html>

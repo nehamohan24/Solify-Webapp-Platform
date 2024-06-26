@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflective Thoughts</title>
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    color: #666;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.entry {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.entry:last-child {
+    border-bottom: none;
+}
+
+.entry h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.entry p {
+    margin-bottom: 0;
+    color: #666;
+}
+
+.entry .actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.actions button {
+    margin-left: 5px;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reflective Thoughts</h1>
+        <form id="reflection-form">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            <label for="thoughts">Your Thoughts:</label>
+            <textarea id="thoughts" name="thoughts" rows="5" required></textarea>
+            <button type="submit">Save</button>
+        </form>
+        <div id="entries">
+            <!-- Entries will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Ensure userEmail is defined in the global scope for accessibility
+let userEmail = localStorage.getItem('loggedInUser');
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (!userEmail) {
+        window.location.href = 'login.html'; // Redirect to login if not logged in
+        return;
+    }
+
+    let user = JSON.parse(localStorage.getItem(userEmail)) || { progress: { reflections: [] } };
+
+    loadEntries(user);
+
+    document.getElementById('reflection-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const date = document.getElementById('date').value;
+        const thoughts = document.getElementById('thoughts').value;
+
+        if (date && thoughts) {
+            const entry = { date, thoughts };
+
+            if (entryExists(user, date)) {
+                alert('You have already written a reflection for this date.');
+            } else {
+                saveEntry(userEmail, entry);
+                addEntryToPage(entry);
+                document.getElementById('reflection-form').reset();
+            }
+        }
+    });
+});
+
+function editEntry(userEmail, entryToEdit) {
+    const thoughts = prompt('Edit your thoughts:', entryToEdit.thoughts);
+    if (thoughts !== null) {
+        entryToEdit.thoughts = thoughts;
+        updateEntry(userEmail, entryToEdit);
+        reloadEntries();
+    }
+}
+
+function updateEntry(userEmail, entryToUpdate) {
+    let user = JSON.parse(localStorage.getItem(userEmail)) || { progress: { reflections: [] } };
+    user.progress.reflections = user.progress.reflections.map(entry => {
+        if (entry.date === entryToUpdate.date) {
+            return entryToUpdate;
+        }
+        return entry;
+    });
+    localStorage.setItem(userEmail, JSON.stringify(user));
+}
+
+function deleteEntry(userEmail, entryToDelete) {
+    let user = JSON.parse(localStorage.getItem(userEmail)) || { progress: { reflections: [] } };
+    user.progress.reflections = user.progress.reflections.filter(entry => entry.date !== entryToDelete.date);
+    localStorage.setItem(userEmail, JSON.stringify(user));
+}
+
+function reloadEntries() {
+    const entriesContainer = document.getElementById('entries');
+    entriesContainer.innerHTML = '';
+    const user = JSON.parse(localStorage.getItem(userEmail)) || { progress: { reflections: [] } };
+    loadEntries(user);
+}
+
+function loadEntries(user) {
+    const entries = user.progress.reflections || [];
+    entries.forEach(addEntryToPage);
+}
+
+function entryExists(user, date) {
+    return user.progress.reflections.some(entry => entry.date === date);
+}
+
+function saveEntry(userEmail, entry) {
+    let user = JSON.parse(localStorage.getItem(userEmail)) || { progress: { reflections: [] } };
+    user.progress.reflections.push(entry);
+    localStorage.setItem(userEmail, JSON.stringify(user));
+}
+
+function addEntryToPage(entry) {
+    const entryElem = document.createElement('div');
+    entryElem.classList.add('entry');
+
+    const dateElem = document.createElement('h3');
+    dateElem.textContent = entry.date;
+    entryElem.appendChild(dateElem);
+
+    const thoughtsElem = document.createElement('p');
+    thoughtsElem.textContent = entry.thoughts;
+    entryElem.appendChild(thoughtsElem);
+
+    const actionsElem = document.createElement('div');
+    actionsElem.classList.add('actions');
+
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.addEventListener('click', function() {
+        editEntry(userEmail, entry);
+    });
+    actionsElem.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function() {
+        deleteEntry(userEmail, entry);
+        entryElem.remove();
+    });
+    actionsElem.appendChild(deleteButton);
+
+    entryElem.appendChild(actionsElem);
+
+    document.getElementById('entries').appendChild(entryElem);
+}
+
+    </script>
+</body>
+</html>

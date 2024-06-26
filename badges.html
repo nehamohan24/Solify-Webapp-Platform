@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Badges</title>
+    <style>
+        /* General body styles */
+        /* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-image: url(../solify/images/bg2.jpg);
+}
+
+/* Container for badges */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ceedce;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     /* Center all content in the container */
+}
+
+/* CSS styles for badges */
+.badge {
+    width: 130px; /* Fixed width */
+    height: 130px; /* Fixed height */
+    padding: 25px;
+    margin: 30px 90px ;
+    border: 2px solid #333;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    background-size: contain; /* Gradient background */
+    border-radius: 50%; /* Rounded to make it look like a badge */
+    display: inline-block;
+    position: relative; /* Ensure badge content positioning relative to badge */
+ /* Add a subtle shadow */
+    text-align: center; /* Center the text */
+    line-height: 20px; /* Center text vertically */
+    font-size: 14px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add text shadow */
+}
+
+.badge.earned {
+    background-color: #56ab56; /* Change the background color for earned badges */
+    border-color: #56ab56; /* Change the border color for earned badges */
+    color: white; /* Change the text color for earned badges */
+}
+
+.badge-info {
+    position: absolute;
+    top: 50%; /* Position vertically centered */
+    left: 100%; /* Position to the right of the badge */
+    transform: translateY(-50%); /* Center the badge info vertically */
+    width: 250px; /* Adjust width as needed */
+    display: none; /* Initially hide badge info */
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    text-align: center; /* Center all text within the badge info */
+    transition: left 0.3s ease; /* Smooth transition */
+}
+
+.badge:hover .badge-info {
+    display: block; /* Show badge info on hover */
+    left: calc(100% + 10px); /* Adjust left position to show info */
+}
+
+/* Progress bar styles */
+.progress-container {
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    height: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style for the complete button */
+.complete-button {
+    display: block;
+    margin: 10px auto 0; /* Center the button and add margin */
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.complete-button:hover {
+    background-color: #45a049;
+}
+
+        /* CSS styles for badges and character section */
+        .character {
+            position: relative;
+            width: 400px; /* Adjust width as per your design */
+            height: 400px; /* Adjust height as per your design */
+            overflow: hidden;
+            margin-bottom: 20px; /* Space between characters */
+        }
+
+        .character img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .character .description {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 400px;
+            height: 400px;
+            background-color: rgba(0, 0, 0, 0.7); /* Background color for description */
+            color: #fff; /* Text color for description */
+            padding: 20px;
+            box-sizing: border-box;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .character:hover img {
+            transform: translateX(-100%);
+        }
+
+        .character:hover .description {
+            left: 0;
+        }
+
+        .character .description h3 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .character .description p {
+            margin-bottom: 0;
+        }
+        .badge-image {
+            width: 100px;
+            height: 100px;
+        
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <center><h1>Earn Badges</h1></center>
+        <div id="badges"></div>
+    <center><section id="charactersSection">
+        <div class="character">
+            <img src="orion.png" alt="Character 1">
+            <div class="description" style="text-align: left;">
+                <h3>Orion: The Observer</h3>
+                <p style="font-family: Georgia, 'Times New Roman', Times, serif" >
+                    <span style="color: #ceedce;">Description</span><br>
+                    Orion is a wise and patient figure, known for his keen ability to observe and understand the world around him. With his deep, thoughtful gaze and calm demeanor, Orion encourages users to engage in reflective writing as a means of exploring their thoughts, emotions, and personal growth. 
+                    
+                    <br><br><span style="color: #ceedce;">Personality</span><br>
+                    Orion is gentle yet insightful, always ready to listen and provide gentle guidance. He embodies qualities of patience, wisdom, and empathy, making him a comforting presence for users navigating their inner journeys through journaling and self-expression.
+                    
+                    <br><br><span style="color: #ceedce;">Role</span><br>
+                    As the guardian of introspection, Orion guides users on their reflective writing journey within the app. He motivates them to delve deeper into their thoughts and feelings, helping them gain clarity, self-awareness, and emotional resilience through the power of writing.
+                    
+                    <br><br><span style="color: #ceedce;">Symbolism</span><br>
+                    Orion's name draws inspiration from the constellation in the night sky, symbolizing guidance and navigation through the complexities of one's inner universe. His role as an observer underscores the importance of mindfulness and reflection in fostering mental well-being and personal development.
+                    
+                    <br><br><span style="color: #ceedce;">Interactions</span><br>
+                    Users earn the "Reflective Writer" badge with Orion's encouragement, recognizing their commitment to self-reflection and growth. Orion's gentle presence and insightful prompts inspire users to embrace journaling as a tool for healing, understanding, and personal transformation.
+                    </p>
+            </div>
+        </div>
+
+        <div class="character">
+            <img src="fay.png" alt="Character 2">
+            <div class="description" style="text-align: left;">
+                <h3>Fay: The Florist</h3>
+                <p style="font-family: Georgia, 'Times New Roman', Times, serif" >
+                    <span style="color: #ceedce;">Description</span><br>
+                    Fay is a dedicated and passionate florist who believes in the therapeutic power of flowers and gardening. She sees the act of nurturing plants as a reflection of consistency and care, essential for both floral arrangements and personal well-being.
+                    
+                    <br><br><span style="color: #ceedce;">Personality</span><br>
+                    Fay is meticulous, patient, and nurturing. She approaches her work with a sense of dedication and attention to detail, ensuring each flower receives the proper care it needs to thrive. Her calm demeanor and steady commitment inspire trust and reliability.
+                    
+                    <br><br><span style="color: #ceedce;">Role</span><br>
+                    Within the mental health app, Fay guides users on cultivating consistency in their daily routines and self-care practices. She emphasizes the importance of small, regular actions in nurturing mental well-being, drawing parallels between tending to plants and fostering personal growth.
+                    
+                    <br><br><span style="color: #ceedce;">Symbolism</span><br>
+                    Fay symbolizes the beauty of consistency and perseverance. Like how she tends to flowers with dedication over time to see them bloom, she encourages users to maintain regular habits that contribute to their emotional resilience and overall mental health.
+                    
+                    <br><br><span style="color: #ceedce;">Interactions</span><br>
+                    Users can earn the "Consistency Champion" badge with Fay's guidance, recognizing their commitment to integrating healthy routines into their daily lives. Fay's nurturing presence and practical advice motivate users to embrace consistency as a cornerstone of their well-being journey.
+                    </p>
+            </div>
+        </div>
+    </section>
+    </center>
+    </div>
+
+
+    <script>
+        // Function to get user data from local storage
+        function getUserData() {
+            const email = localStorage.getItem('loggedInUser');
+            return JSON.parse(localStorage.getItem(email));
+        }
+
+        // Function to get progress of the logged-in user
+        function getProgress() {
+            const data = getUserData();
+            return data.progress;
+        }
+
+        // Function to display badges
+        // Function to display badges
+        function updateProgress(progress) {
+    const email = localStorage.getItem('loggedInUser');
+    if (email) {
+        const userData = JSON.parse(localStorage.getItem(email));
+        if (userData) {
+            userData.progress = progress;
+            localStorage.setItem(email, JSON.stringify(userData));
+        }
+    }
+}
+
+        function checkBadges(progress) {
+            const badgeCriteria = {
+                meditation: 30,
+                journaling: 8
+            };
+
+            if (progress.meditation >= badgeCriteria.meditation && !progress.badges.includes('Consistency Champion')) {
+                progress.badges.push('Consistency Champion');
+                updateProgress(progress);
+            }
+            if (progress.journaling >= badgeCriteria.journaling && !progress.badges.includes('Reflective Writer')) {
+                progress.badges.push('Reflective Writer');
+                updateProgress(progress);
+            }
+        }
+function displayBadges() {
+    const badgesDiv = document.getElementById('badges');
+    badgesDiv.innerHTML = '';
+    const progress = getProgress();
+
+    // Define badges with their criteria
+    const badges = [
+        { name: 'Consistency Champion', earned: progress.meditation >= 30, image: 'fay.png', url: 'meditation.html' },
+        { name: 'Reflective Writer', earned: progress.journaling >= 8, image: 'orion.png', url: 'thoughts.html' }
+    ];
+
+    badges.forEach(badge => {
+        const badgeDiv = document.createElement('div');
+        badgeDiv.classList.add('badge');
+        if (badge.earned) badgeDiv.classList.add('earned');
+        badgeDiv.textContent = badge.name;
+
+        const badgeImage = document.createElement('img');
+        badgeImage.src = badge.image;
+        badgeImage.alt = badge.name;
+        badgeImage.classList.add('badge-image');
+        badgeDiv.appendChild(badgeImage);
+
+        // Create badge info container
+        const badgeInfo = document.createElement('div');
+        badgeInfo.classList.add('badge-info');
+
+        // Add badge information here
+        const badgeDescription = document.createElement('p');
+        badgeDescription.textContent = badge.name === 'Consistency Champion' 
+            ? 'Awarded for completing 12 meditation sessions.' 
+            : 'Awarded for completing 3 journaling sessions.';
+
+        // Create progress bar for badge
+        const progressContainer = document.createElement('div');
+        progressContainer.classList.add('progress-container');
+        const progressText = document.createElement('div');
+        progressText.classList.add('progress-text');
+        progressText.textContent = badge.name + ' Progress';
+        progressContainer.appendChild(progressText);
+
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('progress-bar');
+        const progressFill = document.createElement('div');
+        progressFill.classList.add('progress-fill');
+        const progressWidth = badge.name === 'Consistency Champion'
+            ? `${(progress.meditation / 30) * 100}%`
+            : `${(progress.journaling / 8) * 100}%`;
+        progressFill.style.width = progressWidth;
+        progressBar.appendChild(progressFill);
+        progressContainer.appendChild(progressBar);
+
+        // Create complete button for badge
+        const completeButton = document.createElement('button');
+        completeButton.classList.add('complete-button');
+        completeButton.textContent = 'Complete';
+        completeButton.onclick = () => {
+            window.location.href = badge.url;
+            checkBadges(progress);
+     // Redirect to badge-specific URL
+        };
+
+        // Append all elements to badge info container
+        badgeInfo.appendChild(badgeDescription);
+        badgeInfo.appendChild(progressContainer);
+        badgeInfo.appendChild(completeButton);
+
+        badgeDiv.appendChild(badgeInfo);
+        badgesDiv.appendChild(badgeDiv);
+    });
+}
+
+
+        // Display badges when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayBadges();
+        });
+
+
+    </script>
+</body>
+</html>
